@@ -1,58 +1,126 @@
-[<img src="form-nerd-logo.png" align="left"/>](https://formnerd.co/react-final-form-readme) **You build great forms, but do you know HOW users use your forms? [Find out with Form Nerd!](https://formnerd.co/react-final-form-readme) Professional analytics from the creator of React Final Form.**
+# 🏁 React Final Form Listeners
+
+[![NPM Version](https://img.shields.io/npm/v/react-final-form-listeners.svg?style=flat)](https://www.npmjs.com/package/react-final-form-listeners)
+[![NPM Downloads](https://img.shields.io/npm/dm/react-final-form-listeners.svg?style=flat)](https://www.npmjs.com/package/react-final-form-listeners)
+[![Build Status](https://travis-ci.org/final-form/react-final-form-listeners.svg?branch=master)](https://travis-ci.org/final-form/react-final-form-listeners)
+[![codecov.io](https://codecov.io/gh/final-form/react-final-form-listeners/branch/master/graph/badge.svg)](https://codecov.io/gh/final-form/react-final-form-listeners)
 
 ---
 
-💰 **Wanna get paid the big bucks writing React? [Take this quiz](https://triplebyte.com/a/V6j0KPS/rff) and get offers from top tech companies!** 💰
+🏁 React Final Form Listeners is a collection of useful components for listening to fields in a [🏁 React Final Form](https://github.com/final-form/react-final-form#-react-final-form).
 
----
+## Installation
 
-# 🏁 React Final Form
+```bash
+npm install --save react-final-form-listeners react-final-form final-form
+```
 
-[![React Final Form](banner.png)](https://final-form.org/react)
+or
 
-[![Backers on Open Collective](https://opencollective.com/final-form/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/final-form/sponsors/badge.svg)](#sponsors) [![NPM Version](https://img.shields.io/npm/v/react-final-form.svg?style=flat)](https://www.npmjs.com/package/react-final-form)
-[![NPM Downloads](https://img.shields.io/npm/dm/react-final-form.svg?style=flat)](https://www.npmjs.com/package/react-final-form)
-[![Build Status](https://travis-ci.org/final-form/react-final-form.svg?branch=master)](https://travis-ci.org/final-form/react-final-form)
-[![codecov.io](https://codecov.io/gh/final-form/react-final-form/branch/master/graph/badge.svg)](https://codecov.io/gh/final-form/react-final-form)
-[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+```bash
+yarn add react-final-form-listeners react-final-form final-form
+```
 
-✅ Zero dependencies (that affect your bundle size)
+## Usage
 
-✅ Only peer dependencies: React and
-[🏁 Final Form](https://github.com/final-form/final-form#-final-form)
+```jsx
+import { Form, Field } from 'react-final-form'
+import { OnChange } from 'react-final-form-listeners'
 
-✅ Opt-in subscriptions - only update on the state you need!
+const MyForm = () => (
+  <Form
+    onSubmit={onSubmit}
+    render={({ handleSubmit, pristine, invalid }) => (
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>
+            <Field name="foo" component="input" type="checkbox" /> Turn foo on?
+          </label>
+          <OnChange name="foo">
+            {(value, previous) => {
+              // do something
+            }}
+          </OnChange>
+        </div>
+        ...
+      </form>
+    )}
+  />
+)
+```
 
-✅ 💥 [**3.0k gzipped**](https://bundlephobia.com/result?p=react-final-form) 💥
+## Table of Contents
 
----
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
 
-[<img align="right" src="docs/sencha.svg" height="100"/>](https://www.sencha.com/)
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-### React Final Form is sponsored by [Sencha](https://www.sencha.com/).
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-Comprehensive JS framework and UI components for building enterprise-grade web apps.
+* [Components](#components)
+  * [`ExternallyChanged`](#externallychanged)
+    * [`name : String`](#name--string)
+    * [`children: (externallyChanged: boolean) => React.Node`](#children-externallychanged-boolean--reactnode)
+  * [`OnBlur`](#onblur)
+    * [`name : String`](#name--string-1)
+    * [`children: () => void`](#children---void)
+  * [`OnChange`](#onchange)
+    * [`name : String`](#name--string-2)
+    * [`children: (value: any, previous: any) => void`](#children-value-any-previous-any--void)
+  * [`OnFocus`](#onfocus)
+    * [`name : String`](#name--string-3)
+    * [`children: () => void`](#children---void-1)
 
----
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## 💬 [Give Feedback on React Final Form](https://goo.gl/forms/dxdfxKNy64DLb99z2) 💬
+## Components
 
-In the interest of making 🏁 React Final Form the best library it can be, we'd love your thoughts and feedback.
+The following can be imported from `react-final-form-listeners`.
 
-[Take a quick survey](https://goo.gl/forms/dxdfxKNy64DLb99z2).
+### `ExternallyChanged`
 
----
+Renders is render prop with a `boolean` flag when the specified field was last updated externally (changed while not active).
 
-React Final Form is a thin React wrapper for [Final Form](https://final-form.org), which is a subscriptions-based form state management library that uses the [Observer pattern](https://en.wikipedia.org/wiki/Observer_pattern), so only the components that need updating are re-rendered as the form's state changes.
+#### `name : String`
 
-## [Getting Started](https://final-form.org/docs/react-final-form/getting-started)
+The name of the field to listen to.
 
-## [Philosophy](https://final-form.org/docs/react-final-form/philosophy)
+#### `children: (externallyChanged: boolean) => React.Node`
 
-## [Examples](https://final-form.org/docs/react-final-form/examples)
+A render prop given the boolean flag.
 
-## [API](https://final-form.org/docs/react-final-form/api)
+### `OnChange`
 
-## [FAQ](https://final-form.org/docs/react-final-form/faq)
+Calls its `children` callback whenever the specified field changes. It renders nothing.
 
-<img src="https://static.scarf.sh/a.png?x-pxid=8feec529-43ac-4b78-8ad9-17c280b4f2d9" />
+#### `name : String`
+
+The name of the field to listen to.
+
+#### `children: (value: any, previous: any) => void`
+
+A function that will be called whenever the specified field is changed. It is passed the new value and the previous value.
+
+### `OnFocus`
+
+Calls its `children` callback whenever the specified field becomes active. It renders nothing.
+
+#### `name : String`
+
+The name of the field to listen to.
+
+#### `children: () => void`
+
+A function that will be called whenever the specified field is changed. It is passed the new value and the previous value.
+
+### `OnBlur`
+
+Calls its `children` callback whenever the specified field is blurred. It renders nothing.
+
+#### `name : String`
+
+The name of the field to listen to.
+
+#### `children: () => void`
+
+A function that will be called whenever the specified field is blurred.
